@@ -25,6 +25,7 @@ struct GraphAppApp: App {
 
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()
+                .environment(viewModel)
         }
     }
 }

@@ -13,8 +13,10 @@ import QuartzCore
 
 @Observable
 class ViewModel {
-    var points: Array<Entity> = Array()
-    // let matScene = try? Entity.load(named: "Materials/WorldPosMaterial.usda")
+    public var points: Array<Entity> = Array()
+    
+    public var functionName: FunctionLibrary.Function = .wave
+    public var graphResolution: Int = 10
     
     func createPoint(radius: Float, material: Material) -> Entity {
         let sphereResource = MeshResource.generateSphere(radius: radius)
@@ -25,7 +27,7 @@ class ViewModel {
     
     
     func makeGraph(graphEntity: Entity, rootEntity: Entity, resolution: Int){
-        let _ = print(rootEntity)
+        // let _ = print(rootEntity)
         let modelComponent = rootEntity.findEntity(named: "Sphere")?.components[ModelComponent.self]
         guard let shaderGraphMaterial = modelComponent?.materials.first as? ShaderGraphMaterial else { return }
         let step = Float(2) / Float(resolution)
@@ -49,6 +51,7 @@ class ViewModel {
             graphEntity.addChild(points[i])
             x += 1
         }
+        // let _ = print(points.count)
     }
     
     func runGraph(){
