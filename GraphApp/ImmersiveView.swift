@@ -23,7 +23,7 @@ struct ImmersiveView: View {
         RealityView { content in
             // Add the initial RealityKit content
             if let scene = try? await Entity(named: "Point", in: realityKitContentBundle) {
-                viewModel.makeGraph(graphEntity: graphEntity, rootEntity: scene, resolution: 50)
+                viewModel.makeGraph(graphEntity: graphEntity, rootEntity: scene, resolution: viewModel.graphResolution)
                 content.add(graphEntity)
                 // content.add(scene)
             }

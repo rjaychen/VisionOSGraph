@@ -22,7 +22,7 @@ struct GraphAppApp: App {
             ContentView()
                 .environment(viewModel)
         }.windowStyle(.plain)
-
+        
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()
                 .environment(viewModel)

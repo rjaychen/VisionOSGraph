@@ -16,7 +16,7 @@ class ViewModel {
     public var points: Array<Entity> = Array()
     
     public var functionName: FunctionLibrary.Function = .wave
-    public var graphResolution: Int = 10
+    public var graphResolution: Int = 20
     
     func createPoint(radius: Float, material: Material) -> Entity {
         let sphereResource = MeshResource.generateSphere(radius: radius)
@@ -24,7 +24,6 @@ class ViewModel {
         let myEntity = ModelEntity(mesh: sphereResource, materials: [myMaterial])
         return myEntity
     }
-    
     
     func makeGraph(graphEntity: Entity, rootEntity: Entity, resolution: Int){
         // let _ = print(rootEntity)

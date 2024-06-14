@@ -6,13 +6,13 @@
 //
 
 import Foundation
-
+import RealityKit
 
 
 public class FunctionLibrary {
     
     public enum Function: Int, CaseIterable, Identifiable, CustomStringConvertible {
-        case wave, multiwave, ripple, sphere, warpedsphere, warpedtorus
+        case wave, multiwave, ripple, sphere, warpedsphere, torus, warpedtorus
         public var id: Self { self }
         public var description: String {
             switch self {
@@ -26,13 +26,15 @@ public class FunctionLibrary {
                 return "Sphere"
             case .warpedsphere:
                 return "Warped Sphere"
+            case .torus:
+                return "Torus"
             case .warpedtorus:
                 return "Warped Torus"
             }
         }
     }
     
-    static var functions = [Wave, MultiWave, Ripple, Sphere, WarpedSphere, WarpedTorus]
+    static var functions = [Wave, MultiWave, Ripple, Sphere, WarpedSphere, Torus, WarpedTorus]
     
     public static func GetFunction(name: Function) -> (Float, Float, Float) -> SIMD3<Float> {
         let f = functions[name.rawValue]
@@ -110,6 +112,22 @@ public class FunctionLibrary {
         p.y = r2 * sin(Float.pi * v);
         p.z = s * cos(Float.pi * u);
         return p
+    }
+    
+    public static func Torus(u: Float, v: Float, t: Float) -> SIMD3<Float> {
+        let r1 = Float(0.75)
+        let r2 = Float(0.25)
+        let s = r1 + r2 * cos(Float.pi * v)
+        var p = SIMD3<Float>()
+        p.x = s * sin(Float.pi * u);
+        p.y = r2 * sin(Float.pi * v);
+        p.z = s * cos(Float.pi * u);
+        let quaternion = simd_quatf(angle: -.pi * t,
+                                    axis: simd_float3(x: sin(.pi/3 * t),
+                                                      y: cos(.pi/8 * t),
+                                                      z: cos(.pi/13 * t)))
+        let rotatedVector = quaternion.act(p)
+        return rotatedVector
     }
     
 }

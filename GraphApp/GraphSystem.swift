@@ -15,6 +15,9 @@ class PointComponent: Component { } // Added at initialization of graph
 
 class GraphSystem: System {
     
+    static var functionName: FunctionLibrary.Function = .wave
+    static var resolution: Int = 20
+    
     private static let query = EntityQuery(where: .has(PointComponent.self))
     
     required init(scene: Scene) { 
@@ -22,10 +25,9 @@ class GraphSystem: System {
     }
     
     func update(context: SceneUpdateContext){
-        let f = FunctionLibrary.GetFunction(name: .sphere)
+        let f = FunctionLibrary.GetFunction(name: GraphSystem.functionName)
         let time = Float(CACurrentMediaTime())
-        let resolution = 50
-        let step = Float(2) / Float(resolution) // Make sure to set this to resolution!!!!
+        let step = Float(2) / Float(GraphSystem.resolution) // Make sure to set this to resolution!!!!
         var u: Float
         var v: Float = (Float(0.5)) * step - Float(1)
         var x = 0
@@ -34,7 +36,7 @@ class GraphSystem: System {
                     matching: Self.query,
                     updatingSystemWhen: .rendering
         ).enumerated(){
-            if (x == resolution){
+            if (x == GraphSystem.resolution){
                 x = 0
                 z += 1
                 v = (Float(z) + Float(0.5)) * step - Float(1)
@@ -44,5 +46,7 @@ class GraphSystem: System {
             x += 1
         }
     }
+    
+    
     
 }
